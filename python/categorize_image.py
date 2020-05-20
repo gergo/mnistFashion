@@ -44,7 +44,8 @@ def run_example(img):
     result = model.predict(img)
     logger.info(result)
     category = np.argmax(result,axis=1)[0]
-    logger.info(category, ": ", fashion_categories[category])
+    logger.info(category)
+    logger.info(fashion_categories[category])
 
 
 def usage():
