@@ -33,14 +33,18 @@ def load_image(filename):
     return img
 
 
-def run_example(img):
-    model_json_file = open('../model/mnist_fashion_cnn.json', 'r')
+def load_model(model_name):
+    model_json_file = open('../model/' + model_name + '.json', 'r')
     loaded_model_json = model_json_file.read()
     model_json_file.close()
     model = model_from_json(loaded_model_json)
     # load weights into new model
-    model.load_weights("../model/mnist_fashion_cnn.h5")
+    model.load_weights("../model/" + model_name + ".h5")
     logger.info("Loaded model from disk")
+    return model
+
+
+def run_example(model, img):
     result = model.predict(img)
     logger.info(result)
     category = np.argmax(result,axis=1)[0]
@@ -49,28 +53,32 @@ def run_example(img):
 
 
 def usage():
-    logger.info("./categorize_image.py --image ../test/test.png")
+    logger.info("./categorize_image.py --image ../test/test.png -- model mnist_fashion_cnn")
 
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hi", ["help", "image="])
+        opts, args = getopt.getopt(sys.argv[1:], "him", ["help", "image=", "model="])
     except getopt.GetoptError as err:
         print(err)
         usage()
         sys.exit(2)
     input_file = None
+    model_name = "mnist_fashion_cnn"
     for o, a in opts:
         if o in ("-h", "--help"):
             usage()
             sys.exit()
         elif o in ("-i", "--image"):
             input_file = a
+        elif o in ("-m", "--model"):
+            model_name = a
         else:
             assert False, "unhandled option"
     img = load_image(input_file)
+    model = load_model(model_name)
     logger.info("image loaded")
-    run_example(img)
+    run_example(model, img)
 
 
 if __name__ == "__main__":
