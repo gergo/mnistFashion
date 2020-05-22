@@ -10,6 +10,3 @@
  - loads the pre-trained model
  - classifies the image
  
-## Enhancement ideas
-- use augmentation to make the model more robust
-- use a pre-trained model for a more complex (probably more accurate) model
