@@ -53,7 +53,7 @@ def run_example(model, img):
 
 
 def usage():
-    logger.info("./categorize_image.py --image ../test/test.png -- model mnist_fashion_cnn")
+    logger.info("./categorize_image.py --image ../test/test.png --model mnist_fashion_cnn")
 
 
 def main():
